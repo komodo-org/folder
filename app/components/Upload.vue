@@ -50,7 +50,7 @@ const uploadFile = async (file) => {
     image.src = URL.createObjectURL(file);
     await new Promise((resolve) => {
       image.onload = () => {
-        dimensions = image.width + "x" + image.height;
+        dimensions = `${image.width}x${image.height}`
         resolve();
       };
     });
