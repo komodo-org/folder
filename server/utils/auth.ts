@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail } from "./db";
+import * as db from "./db";
 
 export const uuid = () => crypto.randomUUID();
 
@@ -34,7 +34,7 @@ export const authHandler = async ({
       status: 403,
     });
   }
-  const registeredUser = await getUserByEmail(email);
+  const registeredUser = await db.getUserByEmail(email);
   if (registeredUser) {
     if (registeredUser.status !== "active") {
       throw createError({
@@ -58,7 +58,7 @@ export const authHandler = async ({
       avatar,
       createdAt: new Date(),
     };
-    await createUser(newUser);
+    await db.createUser(newUser);
     return newUser;
   }
 };

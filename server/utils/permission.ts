@@ -1,4 +1,4 @@
-import { getBucket } from "./db";
+import * as db from "./db";
 
 // @ts-ignore
 export const getVerifiedUser = async (event) => {
@@ -21,7 +21,7 @@ export const verifyBucket = async (event) => {
       message: "Invalid Path",
     });
   }
-  const bucket = await getBucket(params.bucket);
+  const bucket = await db.getBucket(params.bucket);
   if (!bucket) {
     throw createError({
       status: 404,

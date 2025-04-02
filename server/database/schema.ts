@@ -106,3 +106,5 @@ export const website = sqliteTable("website", {
   bucketName: text("bucket_name").notNull(),
   createdAt: createdAt,
 });
+
+export default {users, buckets, files, favorites, shared, website}
