@@ -8,8 +8,8 @@ const { file, dir, selected } = defineProps<{
 const emit = defineEmits(["select", "open", "delete"]);
 const summary = computed(() => {
   let text = file.type;
-  if (file.size) text += " / " + formatBytes(file.size as number);
-  if (file.dimensions) text += " / " + file.dimensions;
+  if (file.size) text = text + ` / ${formatBytes(file.size as number)}`;
+  if (file.dimensions) text = text + ` / ${file.dimensions}`;
   return text;
 });
 </script>

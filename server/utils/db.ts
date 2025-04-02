@@ -82,7 +82,8 @@ export const makePaginate = (dbQuery: any, queryString: any) => {
     });
   }
 
-  const offset = (Number(page) - 1) * Number(perPage);
+  let offset = (Number(page) - 1)
+  offset = offset * Number(perPage);
   return dbQuery.limit(Number(perPage)).offset(offset);
 };
 

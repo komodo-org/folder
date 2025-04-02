@@ -6,7 +6,9 @@ const used = computed(() => {
   else return 0;
 });
 const usedPercentage = computed(() => {
-  return (used.value / limit) * 100;
+  let aux = (used.value / limit);
+  aux = 100 * aux  // To Percentage format
+  return aux;
 });
 </script>
 <template>
