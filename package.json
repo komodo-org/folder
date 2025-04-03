@@ -24,6 +24,7 @@
     "drizzle-orm": "^0.40.0",
     "nuxt": "^3.16.0",
     "nuxt-auth-utils": "^0.5.16",
+    "openai": "^3.3.0",
     "ulidx": "^2.4.1"
   },
   "devDependencies": {

@@ -67,10 +67,19 @@
 </template>
 
 <script>
+import { Configuration, OpenAIApi } from "openai";
+
+const myConfig = new Configuration({
+  apiKey: process.env.VUE_APP_OPENAI_API_KEY,
+});
+
+const openai = new OpenAIApi(myConfig);
+
 export default {
   name: "FloatingChat",
   data() {
     return {
+      apiKey: process.env.VUE_APP_OPENAI_API_KEY,
       isChatOpen: false,
       userInput: "",
       messages: [{ text: "Hello! How can I help you today?", sender: "bot" }],
@@ -109,19 +118,15 @@ export default {
     async sendMessage() {
       if (!this.userInput.trim() || this.isLoading) return;
 
-      // Add user message
       const userMessage = this.userInput.trim();
       this.messages.push({ text: userMessage, sender: "user" });
       this.userInput = "";
 
-      // Show loading indicator
       this.isLoading = true;
 
       try {
-        // Call OpenAI API
         const response = await this.callOpenAI(userMessage);
-
-        // Add bot response
+        // Add bot response to chat
         this.messages.push({ text: response, sender: "bot" });
       } catch (error) {
         console.error("Error calling OpenAI API:", error);
@@ -134,25 +139,14 @@ export default {
       }
     },
     async callOpenAI(message) {
-      // Example implementation:
       try {
-        const response = await fetch("https://your-backend-api/openai", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: message,
-            // Add any other parameters your backend expects
-          }),
+        const response = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: message }],
+          max_tokens: 100,
+          temperature: 0.7,
         });
-
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data.response;
+        return response.data.choices[0].message.content.trim();
       } catch (error) {
         console.error("OpenAI API call failed:", error);
         throw error;
