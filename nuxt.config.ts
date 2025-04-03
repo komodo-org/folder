@@ -30,4 +30,9 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   compatibilityDate: "2024-11-27",
+  runtimeConfig: {
+    public: {
+      apiKey: process.env.NUXT_OPENAI_API_KEY,
+    },
+  },
 });
