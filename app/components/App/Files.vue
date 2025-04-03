@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import ChatBot from "./ChatBot.vue";
+
 const props = defineProps<{
   title?: string;
   endpoint?: string;
@@ -80,5 +82,6 @@ defineShortcuts({
     >
       Load more
     </UButton>
+    <ChatBot />
   </AppMain>
 </template>
