@@ -67,15 +67,7 @@
 </template>
 
 <script>
-const runtimeConfig = useRuntimeConfig();
-
-import { Configuration, OpenAIApi } from "openai";
-
-const myConfig = new Configuration({
-  apiKey: runtimeConfig.public.apiKey,
-});
-
-const openai = new OpenAIApi(myConfig);
+import { callOpenAI } from "../../services/openaiService";
 
 export default {
   name: "FloatingChat",
@@ -126,7 +118,7 @@ export default {
       this.isLoading = true;
 
       try {
-        const response = await this.callOpenAI(userMessage);
+        const response = await callOpenAI(userMessage);
         // Add bot response to chat
         this.messages.push({ text: response, sender: "bot" });
       } catch (error) {
@@ -137,20 +129,6 @@ export default {
         });
       } finally {
         this.isLoading = false;
-      }
-    },
-    async callOpenAI(message) {
-      try {
-        const response = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: message }],
-          max_tokens: 100,
-          temperature: 0.7,
-        });
-        return response.data.choices[0].message.content.trim();
-      } catch (error) {
-        console.error("OpenAI API call failed:", error);
-        throw error;
       }
     },
   },
