@@ -67,10 +67,12 @@
 </template>
 
 <script>
+const runtimeConfig = useRuntimeConfig();
+
 import { Configuration, OpenAIApi } from "openai";
 
 const myConfig = new Configuration({
-  apiKey: process.env.VUE_APP_OPENAI_API_KEY,
+  apiKey: runtimeConfig.public.apiKey,
 });
 
 const openai = new OpenAIApi(myConfig);
@@ -79,7 +81,6 @@ export default {
   name: "FloatingChat",
   data() {
     return {
-      apiKey: process.env.VUE_APP_OPENAI_API_KEY,
       isChatOpen: false,
       userInput: "",
       messages: [{ text: "Hello! How can I help you today?", sender: "bot" }],
