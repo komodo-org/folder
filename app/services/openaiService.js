@@ -4,6 +4,7 @@ const runtimeConfig = useRuntimeConfig();
 
 const myConfig = new Configuration({
   apiKey: runtimeConfig.public.apiKey,
+  dangerouslyAllowBrowser: true,
 });
 
 const openai = new OpenAIApi(myConfig);
